@@ -9,14 +9,16 @@
 import Foundation
 
 class ChatDataStore{
-    
+    var cid: String?
+    var rid: String?
     var userName: String?
     var message: String?
     var date: String?
   //  var userProfile: String?
     
-    init(userName: String?,message: String?, date: String?) {
-        
+    init(cid:String?,rid: String?,userName: String?,message: String?, date: String?) {
+     self.cid = cid
+     self.rid = rid
      self.userName = userName
      self.message = message
      self.date = date

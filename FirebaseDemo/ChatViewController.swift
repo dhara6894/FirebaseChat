@@ -11,12 +11,11 @@ import Firebase
 class chatData {
     
 }
-
 class ChatViewController: UIViewController{
  
     var ref: FIRDatabaseReference!
-   // var dataRef: FIRDatabaseReference!
     var chat = [ChatDataStore]()
+    var user = [UserData]()
     @IBOutlet weak var IBtxtMessage: CustomTextField!
     @IBOutlet weak var IBtblChatView: UITableView!{
         didSet{
@@ -25,24 +24,41 @@ class ChatViewController: UIViewController{
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(user)
         IBtxtMessage.btnSend.addTarget(self, action: #selector(self.sendBtn(sender:)), for: .touchUpInside)
         IBtxtMessage.delegate = self
         IBtblChatView.delegate = self
         IBtblChatView.dataSource = self
         ref = FIRDatabase.database().reference()
-        ref.child("ChatData").child("userName")
-        ref.child("ChatData").child("message")
-        ref.child("ChatData").child("date")
-        
-        ref.observe(FIRDataEventType.value, with: {(snapshot) in
-            let data = snapshot.value as? [String:AnyObject] ?? [:]
-            print(data)
-            let uname = data["userName"] as! String
-            let message = data["message"] as! String
-            let date = data["date"] as! String
-            let chatData = ChatDataStore(userName: uname, message: message, date: date)
+        LoadData()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    //------------------------------------------------------
+    // MARK:- user define function
+    //--------------------------------------------------------
+    func sendBtn(sender: UIButton){
+      if IBtxtMessage.text?.isEmpty == true{
+          showAlertDialog(self, message: "Please Enter Message", title: "", clickAction:{})
+      }else{
+            guard let sendText = IBtxtMessage.text , sendText != "" else{
+            return
+            }
+           let defaults = UserDefaults.standard
+           let sUserName = defaults.string(forKey: "UserName")
+           defaults.synchronize()
+
+            let rid = user.first?.uid
+            let uname = "Me"
+            let message = sendText
+            let date = Date().getDateStringFromDate()
+            ref.child("ChatData").childByAutoId().setValue(["rid": rid,"userName": sUserName, "message": message, "date": date])
+            let chatData = ChatDataStore(cid: " ",rid: rid,userName: sUserName, message: message, date: date)
             self.chat.append(chatData)
-            
             DispatchQueue.main.async {
                 self.IBtblChatView.beginUpdates()
                 let newIndex = IndexPath(row: self.chat.count - 1, section: 0)
@@ -53,27 +69,8 @@ class ChatViewController: UIViewController{
                     self.IBtblChatView.scrollToRow(at: _indexPath, at: .bottom, animated: false)
                 }
             }
-        })
+            IBtxtMessage.text = ""
     }
-    
-    func sendBtn(sender: UIButton){
-      if IBtxtMessage.text?.isEmpty == true{
-          showAlertDialog(self, message: "Please Enter Message", title: "", clickAction: {})
-      }else{
-        guard let sendText = IBtxtMessage.text , sendText != "" else{
-            return
-        }
-        let uname = "Me"
-        let message = sendText
-      //  ref.removeValue()
-        let date = Date().getDateStringFromDate()
-        //let profile = ""
-        ref.childByAutoId().setValue(["userName": uname, "message": message, "date": date])
-      }
-    }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     private func setupTableView() {
         IBtblChatView.dataSource = self
@@ -89,7 +86,30 @@ class ChatViewController: UIViewController{
         IBtblChatView.estimatedRowHeight = 115
         IBtblChatView.rowHeight = UITableViewAutomaticDimension
     }
-
+    func LoadData(){
+        let postsRef = self.ref.child("ChatData")
+        postsRef.observeSingleEvent(of: .value, with: {(snapshot) in
+        if let snapshot = snapshot.children.allObjects as? [FIRDataSnapshot] {
+            for snap in snapshot{
+                    let cKey = snap.key
+                    let value = snap.value as? [String:AnyObject]
+                    print(value)
+                   // let uname = value?["userName"] as! String
+                if self.user.first?.uid == value?["rid"] as? String || value?["userName"] as? String == self.user.first?.username{
+                        let rid = self.user.first?.uid
+                        let uname = value?["userName"] as! String
+                        let message = value?["message"] as! String
+                        let date = value?["date"] as! String
+                        let chatData = ChatDataStore(cid: cKey,rid: rid, userName: uname, message: message, date: date)
+                        self.chat.append(chatData)
+                        DispatchQueue.main.async {
+                            self.IBtblChatView.reloadData()
+                        }
+                }
+            }
+        }
+        })
+    }
     func showAlertDialog(_ viewController:UIViewController, message:String, title: String, clickAction:@escaping ()->() ) {
         let alertView = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertView.message = message
@@ -114,25 +134,33 @@ extension ChatViewController : UITableViewDelegate, UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let chatData = self.chat
-        //if indexPath.row == 0{
+//        let defaults = UserDefaults.standard
+//        let sUserName = defaults.string(forKey: "UserName")
+//        defaults.synchronize()
+
+        if user.first?.username == chatData[indexPath.row].userName{
+            var cell = tableView.dequeueReusableCell(withIdentifier: "LeftCell") as? LeftChatCell
+            if cell == nil{
+                cell = loadNibWithName(nibName: "ChatViewCell", index: 0) as? LeftChatCell
+            }
+            if chatData.count > 0{
+                cell?.IBlblName.text = chatData[indexPath.row].userName
+                cell?.IBlblMessage.text = chatData[indexPath.row].message
+                cell?.IBlblDate.text = chatData[indexPath.row].date
+            }
+            return cell!
+        }else{
             var cell = tableView.dequeueReusableCell(withIdentifier: "RightCell") as? RightChatCell
             if cell == nil{
-               cell = loadNibWithName(nibName: "ChatViewCell", index: 0) as? RightChatCell
+                cell = loadNibWithName(nibName: "ChatViewCell", index: 1) as? RightChatCell
             }
-        if chatData.count > 0{
-            cell?.IBlblName.text = chatData[indexPath.row].userName
-            cell?.IBlblMessage.text = chatData[indexPath.row].message
-            cell?.IBlblDate.text = chatData[indexPath.row].date
+            if chatData.count > 0{
+                cell?.IBlblName.text = chatData[indexPath.row].userName
+                cell?.IBlblMessage.text = chatData[indexPath.row].message
+                cell?.IBlblDate.text = chatData[indexPath.row].date
+            }
+            return cell!
         }
-        return cell!
-    // }
-    //        else indexPath.row == 1{
-    //            var cell = tableView.dequeueReusableCell(withIdentifier: "LeftCell") as? LeftChatCell
-    //            if cell == nil{
-    //                cell = loadNibWithName(nibName: "ChatViewCell", index: 1) as? LeftChatCell
-    //            }
-    //            return cell!
-    //        }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 110

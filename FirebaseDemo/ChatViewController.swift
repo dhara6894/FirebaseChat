@@ -24,6 +24,9 @@ class ChatViewController: UIViewController{
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        IBtblChatView.register(UINib(nibName: "LeftTableViewCell", bundle: nil), forCellReuseIdentifier: "LeftCell")
+         IBtblChatView.register(UINib(nibName: "RightTableViewCell", bundle: nil), forCellReuseIdentifier: "RightCell")
         print(user)
         IBtxtMessage.btnSend.addTarget(self, action: #selector(self.sendBtn(sender:)), for: .touchUpInside)
         IBtxtMessage.delegate = self
@@ -48,10 +51,9 @@ class ChatViewController: UIViewController{
             guard let sendText = IBtxtMessage.text , sendText != "" else{
             return
             }
-           let defaults = UserDefaults.standard
-           let sUserName = defaults.string(forKey: "UserName")
-           defaults.synchronize()
-
+            let defaults = UserDefaults.standard
+            let sUserName = defaults.string(forKey: "UserName")
+            defaults.synchronize()
             let rid = user.first?.uid
             let uname = "Me"
             let message = sendText
@@ -65,12 +67,40 @@ class ChatViewController: UIViewController{
                 self.IBtblChatView.insertRows(at: [newIndex], with: .none)
                 self.IBtblChatView.endUpdates()
                 if self.chat.count > 0 {
-                    let _indexPath = IndexPath(row: self.chat.count - 1, section: 0)
-                    self.IBtblChatView.scrollToRow(at: _indexPath, at: .bottom, animated: false)
+                let _indexPath = IndexPath(row: self.chat.count - 1, section: 0)
+                self.IBtblChatView.scrollToRow(at: _indexPath, at: .bottom, animated: false)
                 }
             }
             IBtxtMessage.text = ""
     }
+    }
+        func LoadData(){
+        let postsRef = self.ref.child("ChatData")
+            postsRef.observe(FIRDataEventType.value, with: {(snapshot) in
+        //postsRef.observe(of: FIRDataEventType.value, with: {(snapshot) in
+        if let snapshot = snapshot.children.allObjects as? [FIRDataSnapshot] {
+            if snapshot.count >= self.chat.count{
+            self.chat.removeAll()
+            for snap in snapshot{
+                let cKey = snap.key
+                let value = snap.value as? [String:AnyObject]
+                print(value)
+                // let uname = value?["userName"] as! String
+                if self.user.first?.uid == value?["rid"] as? String || value?["userName"] as? String == self.user.first?.username{
+                        let rid = self.user.first?.uid
+                        let uname = value?["userName"] as! String
+                        let message = value?["message"] as! String
+                        let date = value?["date"] as! String
+                        let chatData = ChatDataStore(cid: cKey,rid: rid, userName: uname, message: message, date: date)
+                        self.chat.append(chatData)
+                        DispatchQueue.main.async {
+                            self.IBtblChatView.reloadData()
+                        }
+                }
+            }
+        }
+    }
+    })
     }
     private func setupTableView() {
         IBtblChatView.dataSource = self
@@ -86,30 +116,7 @@ class ChatViewController: UIViewController{
         IBtblChatView.estimatedRowHeight = 115
         IBtblChatView.rowHeight = UITableViewAutomaticDimension
     }
-    func LoadData(){
-        let postsRef = self.ref.child("ChatData")
-        postsRef.observeSingleEvent(of: .value, with: {(snapshot) in
-        if let snapshot = snapshot.children.allObjects as? [FIRDataSnapshot] {
-            for snap in snapshot{
-                    let cKey = snap.key
-                    let value = snap.value as? [String:AnyObject]
-                    print(value)
-                   // let uname = value?["userName"] as! String
-                if self.user.first?.uid == value?["rid"] as? String || value?["userName"] as? String == self.user.first?.username{
-                        let rid = self.user.first?.uid
-                        let uname = value?["userName"] as! String
-                        let message = value?["message"] as! String
-                        let date = value?["date"] as! String
-                        let chatData = ChatDataStore(cid: cKey,rid: rid, userName: uname, message: message, date: date)
-                        self.chat.append(chatData)
-                        DispatchQueue.main.async {
-                            self.IBtblChatView.reloadData()
-                        }
-                }
-            }
-        }
-        })
-    }
+
     func showAlertDialog(_ viewController:UIViewController, message:String, title: String, clickAction:@escaping ()->() ) {
         let alertView = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertView.message = message
@@ -134,15 +141,11 @@ extension ChatViewController : UITableViewDelegate, UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let chatData = self.chat
-//        let defaults = UserDefaults.standard
-//        let sUserName = defaults.string(forKey: "UserName")
-//        defaults.synchronize()
-
         if user.first?.username == chatData[indexPath.row].userName{
-            var cell = tableView.dequeueReusableCell(withIdentifier: "LeftCell") as? LeftChatCell
-            if cell == nil{
-                cell = loadNibWithName(nibName: "ChatViewCell", index: 0) as? LeftChatCell
-            }
+            let cell = tableView.dequeueReusableCell(withIdentifier: "LeftCell") as? LeftTableViewCell
+//            if cell == nil{
+//                cell = loadNibWithName(nibName: "ChatViewCell", index: 0) as? LeftChatCell
+//            }
             if chatData.count > 0{
                 cell?.IBlblName.text = chatData[indexPath.row].userName
                 cell?.IBlblMessage.text = chatData[indexPath.row].message
@@ -150,10 +153,10 @@ extension ChatViewController : UITableViewDelegate, UITableViewDataSource{
             }
             return cell!
         }else{
-            var cell = tableView.dequeueReusableCell(withIdentifier: "RightCell") as? RightChatCell
-            if cell == nil{
-                cell = loadNibWithName(nibName: "ChatViewCell", index: 1) as? RightChatCell
-            }
+            let cell = tableView.dequeueReusableCell(withIdentifier: "RightCell") as? RightTableViewCell
+//            if cell == nil{
+//               cell = loadNibWithName(nibName: "ChatViewCell", index: 1) as? RightChatCell
+//            }
             if chatData.count > 0{
                 cell?.IBlblName.text = chatData[indexPath.row].userName
                 cell?.IBlblMessage.text = chatData[indexPath.row].message

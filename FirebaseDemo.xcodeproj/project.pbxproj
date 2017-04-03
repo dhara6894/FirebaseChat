@@ -16,8 +16,8 @@
 		29CFF8151E8B837E008F8FE8 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CFF8141E8B837E008F8FE8 /* SecondViewController.swift */; };
 		29CFF81A1E8CC9A2008F8FE8 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CFF8181E8CC9A2008F8FE8 /* ChatViewController.swift */; };
 		29CFF81B1E8CC9A2008F8FE8 /* ChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29CFF8191E8CC9A2008F8FE8 /* ChatViewController.xib */; };
-		29CFF81E1E8CC9FE008F8FE8 /* ChatViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CFF81C1E8CC9FE008F8FE8 /* ChatViewCell.swift */; };
-		29CFF81F1E8CC9FE008F8FE8 /* ChatViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29CFF81D1E8CC9FE008F8FE8 /* ChatViewCell.xib */; };
+		29CFF81E1E8CC9FE008F8FE8 /* LeftTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CFF81C1E8CC9FE008F8FE8 /* LeftTableViewCell.swift */; };
+		29CFF81F1E8CC9FE008F8FE8 /* LeftTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29CFF81D1E8CC9FE008F8FE8 /* LeftTableViewCell.xib */; };
 		29CFF8231E8CE9D4008F8FE8 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CFF8221E8CE9D4008F8FE8 /* CustomTextField.swift */; };
 		29CFF8251E8D0D4E008F8FE8 /* ChatDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CFF8241E8D0D4E008F8FE8 /* ChatDataStore.swift */; };
 		29CFF8281E8E1C90008F8FE8 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CFF8261E8E1C90008F8FE8 /* RegisterViewController.swift */; };
@@ -29,6 +29,8 @@
 		29CFF8341E8E90B6008F8FE8 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CFF8321E8E90B6008F8FE8 /* UserTableViewCell.swift */; };
 		29CFF8351E8E90B6008F8FE8 /* UserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29CFF8331E8E90B6008F8FE8 /* UserTableViewCell.xib */; };
 		29CFF8371E8F6CD5008F8FE8 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CFF8361E8F6CD5008F8FE8 /* UserData.swift */; };
+		29D714FF1E9224B900574D79 /* RightTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D714FD1E9224B900574D79 /* RightTableViewCell.swift */; };
+		29D715001E9224B900574D79 /* RightTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29D714FE1E9224B900574D79 /* RightTableViewCell.xib */; };
 		DA1D23ED5A8FDD49D8AD5B7F /* Pods_FirebaseDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002A6BEEF2DB76A586A9F046 /* Pods_FirebaseDemo.framework */; };
 /* End PBXBuildFile section */
 
@@ -45,8 +47,8 @@
 		29CFF8141E8B837E008F8FE8 /* SecondViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		29CFF8181E8CC9A2008F8FE8 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		29CFF8191E8CC9A2008F8FE8 /* ChatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatViewController.xib; sourceTree = "<group>"; };
-		29CFF81C1E8CC9FE008F8FE8 /* ChatViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewCell.swift; sourceTree = "<group>"; };
-		29CFF81D1E8CC9FE008F8FE8 /* ChatViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatViewCell.xib; sourceTree = "<group>"; };
+		29CFF81C1E8CC9FE008F8FE8 /* LeftTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftTableViewCell.swift; sourceTree = "<group>"; };
+		29CFF81D1E8CC9FE008F8FE8 /* LeftTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LeftTableViewCell.xib; sourceTree = "<group>"; };
 		29CFF8221E8CE9D4008F8FE8 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		29CFF8241E8D0D4E008F8FE8 /* ChatDataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatDataStore.swift; sourceTree = "<group>"; };
 		29CFF8261E8E1C90008F8FE8 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
@@ -58,6 +60,8 @@
 		29CFF8321E8E90B6008F8FE8 /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		29CFF8331E8E90B6008F8FE8 /* UserTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserTableViewCell.xib; sourceTree = "<group>"; };
 		29CFF8361E8F6CD5008F8FE8 /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		29D714FD1E9224B900574D79 /* RightTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightTableViewCell.swift; sourceTree = "<group>"; };
+		29D714FE1E9224B900574D79 /* RightTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RightTableViewCell.xib; sourceTree = "<group>"; };
 		58930104F0872760187F7634 /* Pods-FirebaseDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FirebaseDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FirebaseDemo/Pods-FirebaseDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		BDD36084E78540B5BAD66BA7 /* Pods-FirebaseDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FirebaseDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-FirebaseDemo/Pods-FirebaseDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -100,19 +104,21 @@
 				29CFF80A1E8A7568008F8FE8 /* GoogleService-Info.plist */,
 				29CFF8381E8F79F3008F8FE8 /* Model */,
 				29CFF8201E8CD990008F8FE8 /* Chat */,
-				29CFF82E1E8E901D008F8FE8 /* UserViewController.swift */,
-				29CFF82F1E8E901D008F8FE8 /* UserViewController.xib */,
-				29CFF8321E8E90B6008F8FE8 /* UserTableViewCell.swift */,
-				29CFF8331E8E90B6008F8FE8 /* UserTableViewCell.xib */,
 				29CFF8261E8E1C90008F8FE8 /* RegisterViewController.swift */,
 				29CFF8271E8E1C90008F8FE8 /* RegisterViewController.xib */,
 				29CFF82A1E8E22F5008F8FE8 /* LoginViewController.swift */,
 				29CFF82B1E8E22F5008F8FE8 /* LoginViewController.xib */,
+				29CFF82E1E8E901D008F8FE8 /* UserViewController.swift */,
+				29CFF82F1E8E901D008F8FE8 /* UserViewController.xib */,
+				29CFF8321E8E90B6008F8FE8 /* UserTableViewCell.swift */,
+				29CFF8331E8E90B6008F8FE8 /* UserTableViewCell.xib */,
 				29CFF8181E8CC9A2008F8FE8 /* ChatViewController.swift */,
 				29CFF8191E8CC9A2008F8FE8 /* ChatViewController.xib */,
+				29CFF81C1E8CC9FE008F8FE8 /* LeftTableViewCell.swift */,
+				29CFF81D1E8CC9FE008F8FE8 /* LeftTableViewCell.xib */,
+				29D714FD1E9224B900574D79 /* RightTableViewCell.swift */,
+				29D714FE1E9224B900574D79 /* RightTableViewCell.xib */,
 				29CFF8221E8CE9D4008F8FE8 /* CustomTextField.swift */,
-				29CFF81C1E8CC9FE008F8FE8 /* ChatViewCell.swift */,
-				29CFF81D1E8CC9FE008F8FE8 /* ChatViewCell.xib */,
 				29CFF8211E8CD9AC008F8FE8 /* LoginFireBase */,
 				29CFF7FF1E8A739B008F8FE8 /* Assets.xcassets */,
 				29CFF8011E8A739C008F8FE8 /* LaunchScreen.storyboard */,
@@ -227,10 +233,11 @@
 			files = (
 				29CFF82D1E8E22F5008F8FE8 /* LoginViewController.xib in Resources */,
 				29CFF8311E8E901D008F8FE8 /* UserViewController.xib in Resources */,
+				29D715001E9224B900574D79 /* RightTableViewCell.xib in Resources */,
 				29CFF8031E8A739C008F8FE8 /* LaunchScreen.storyboard in Resources */,
 				29CFF8001E8A739C008F8FE8 /* Assets.xcassets in Resources */,
 				29CFF8351E8E90B6008F8FE8 /* UserTableViewCell.xib in Resources */,
-				29CFF81F1E8CC9FE008F8FE8 /* ChatViewCell.xib in Resources */,
+				29CFF81F1E8CC9FE008F8FE8 /* LeftTableViewCell.xib in Resources */,
 				29CFF80B1E8A7568008F8FE8 /* GoogleService-Info.plist in Resources */,
 				29CFF81B1E8CC9A2008F8FE8 /* ChatViewController.xib in Resources */,
 				29CFF8291E8E1C90008F8FE8 /* RegisterViewController.xib in Resources */,
@@ -296,9 +303,10 @@
 				29CFF82C1E8E22F5008F8FE8 /* LoginViewController.swift in Sources */,
 				29CFF8301E8E901D008F8FE8 /* UserViewController.swift in Sources */,
 				29CFF8341E8E90B6008F8FE8 /* UserTableViewCell.swift in Sources */,
-				29CFF81E1E8CC9FE008F8FE8 /* ChatViewCell.swift in Sources */,
+				29CFF81E1E8CC9FE008F8FE8 /* LeftTableViewCell.swift in Sources */,
 				29CFF8251E8D0D4E008F8FE8 /* ChatDataStore.swift in Sources */,
 				29CFF8151E8B837E008F8FE8 /* SecondViewController.swift in Sources */,
+				29D714FF1E9224B900574D79 /* RightTableViewCell.swift in Sources */,
 				29CFF8231E8CE9D4008F8FE8 /* CustomTextField.swift in Sources */,
 				29CFF8281E8E1C90008F8FE8 /* RegisterViewController.swift in Sources */,
 				29CFF8371E8F6CD5008F8FE8 /* UserData.swift in Sources */,
